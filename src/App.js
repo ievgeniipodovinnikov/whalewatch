@@ -8,7 +8,8 @@ const TOKENS = [
     "SUSHI", "MKR", "WBTC", "COMP", "YFI", "BAT", "TUSD"
 ];
 
-const accessToken = 'Bearer ory_at_VIOvAlBtdAJFGkRuVw444E7vvh5rIg_4i-dgZtW9Ex4.I4rQo5mohTMynWnJpAF9dzBpzKTMpjGjaboBTI3Qw24\t';
+console.log('Access Token:', process.env.REACT_APP_BIT_QUERY_API_KEY);
+const accessToken = 'Bearer ${process.env.BIT_QUERY_API_KEY}';
 
 const getQuery = (symbol) => {
     return `
