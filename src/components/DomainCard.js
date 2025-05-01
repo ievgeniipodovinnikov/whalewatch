@@ -1,0 +1,93 @@
+import React, { useState } from "react";
+
+const DomainCard = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCardClosed, setIsCardClosed] = useState(false); // Состояние для закрытия карточки
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+    const closeCard = () => setIsCardClosed(true); // Функция для закрытия карточки
+
+    const domain = "whalewatch.live";
+    const description = "Track cryptocurrency whale movements in real-time. Perfect for an active platform that updates users regularly.";
+    const price = 999;
+
+    if (isCardClosed) return null; // Если карточка закрыта, ничего не рендерим
+
+    return (
+        <div className="fixed top-8 right-8 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-6 bg-gray-800 bg-opacity-80 text-white rounded-xl shadow-lg">
+            <h3 className="text-2xl font-semibold mb-2">
+                This service is For Sale: <span className="text-blue-400 font-mono">{domain}</span>
+            </h3>
+            <p className="italic text-sm mb-4">
+                Includes working site, premium domain, and active Twitter.
+            </p>
+
+            <p className="mb-4">{description}</p> {/* Краткое описание */}
+            <p className="mb-4 text-lg font-bold">${price}</p> {/* Отображение цены */}
+            <button
+                onClick={openModal}
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+            >
+                Buy Now
+            </button>
+
+            {/* Крестик для закрытия карточки */}
+            <button
+                onClick={closeCard}
+                className="absolute top-2 right-2 text-white text-xl font-bold"
+            >
+                &times;
+            </button>
+
+            {/* Icon */}
+            <img
+                src="/shark.png"
+                alt="Shark Icon"
+                className="absolute bottom-12 right-8 transform -translate-x-1/2 w-20 h-20 rounded-lg"
+            />
+
+            {/* Buy Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="modal-content bg-gray-900 p-6 rounded-xl">
+                        <h3 className="text-xl text-center text-white mb-4">
+                            Contact to buy {domain}
+                        </h3>
+                        <p className="text-white mb-4">Select a contact option:</p>
+                        <div className="flex flex-col gap-4">
+                            <a
+                                href="https://t.me/Kaiserkrab"
+                                target="_blank"
+                                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                            >
+                                Telegram
+                            </a>
+                            <a
+                                href="https://wa.me/40765263983"
+                                target="_blank"
+                                className="bg-green-500 text-white px-4 py-2 rounded-lg"
+                            >
+                                WhatsApp
+                            </a>
+                            <a
+                                href="#"
+                                className="bg-yellow-500 text-white px-4 py-2 rounded-lg"
+                            >
+                                Buy on Namecheap
+                            </a>
+                            <button
+                                className="text-white bg-red-600 px-4 py-2 rounded-lg"
+                                onClick={closeModal}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default DomainCard;

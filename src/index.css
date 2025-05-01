@@ -4,25 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Плавная анимация градиента */
-@keyframes gradientAnimation {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 body {
-  background: linear-gradient(45deg, #3b82f6, #6a5acd, #ff6347, #2ecc71);
   background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
+  background-color: white;
 }
 
-@keyframes gradientAnimation {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.app-container {
-  min-height: 100vh;
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
