@@ -3,40 +3,47 @@ import { Input } from "./components/ui/input";
 import DomainCard from "./components/DomainCard";
 import axios from 'axios';
 
+const TOKENS = [
+    "ETH", "USDT", "USDC", "DAI", "SHIB", "LINK", "UNI", "AAVE",
+    "SUSHI", "MKR", "WBTC", "COMP", "YFI", "BAT", "TUSD"
+];
+
 const accessToken = 'Bearer ory_at_VIOvAlBtdAJFGkRuVw444E7vvh5rIg_4i-dgZtW9Ex4.I4rQo5mohTMynWnJpAF9dzBpzKTMpjGjaboBTI3Qw24\t';
 
-const query = `
-query {
-  ethereum: EVM(network: eth) {
-    Transfers(
-      limit: {count: 1000}
-      orderBy: {descending: Block_Time}
-      where: {
-        Transfer: {
-          Currency: {
-            Symbol: {in: ["ETH"]}
+const getQuery = (symbol) => {
+    return `
+    query {
+      ethereum: EVM(network: eth) {
+        Transfers(
+          limit: { count: 100 },
+          orderBy: { descending: Block_Time },
+          where: {
+            Transfer: {
+              Currency: {
+                Symbol: { in: ["${symbol}"] }
+              }
+            }
+          }
+        ) {
+          Block {
+            Time
+          }
+          Transfer {
+            Amount
+            Currency {
+              Symbol
+            }
+            Sender
+            Receiver
+          }
+          Transaction {
+            Hash
           }
         }
       }
-    ) {
-      Block {
-        Time
-      }
-      Transfer {
-        Amount
-        Currency {
-          Symbol
-        }
-        Sender
-        Receiver
-      }
-      Transaction {
-        Hash
-      }
     }
-  }
-}
-`;
+  `;
+};
 
 const FALLBACK_DATA = [
     {
@@ -62,8 +69,9 @@ const FALLBACK_DATA = [
     }
 ];
 
-const getTransactionData = async () => {
+const getTransactionData = async (token) => {
     try {
+        const query = getQuery(token); // Получаем запрос в зависимости от выбранного токена
         const response = await axios.post(
             'https://streaming.bitquery.io/graphql',
             { query },
@@ -75,7 +83,7 @@ const getTransactionData = async () => {
             }
         );
 
-        let data = response.data.data.ethereum.Transfers.map((tx) => ({
+        const data = response.data.data.ethereum.Transfers.map((tx) => ({
             symbol: tx.Transfer.Currency.Symbol,
             amount: parseFloat(tx.Transfer.Amount),
             from: { owner: tx.Transfer.Sender },
@@ -84,17 +92,9 @@ const getTransactionData = async () => {
             time: new Date(tx.Block.Time).toLocaleString(),
         }));
 
-        // Оставляем только большие транзакции
-        data = data.filter(tx => {
-            const { symbol, amount } = tx;
-            if (symbol === 'ETH') return amount > 10;
-            if (symbol === 'BTC') return amount > 0.2;
-            if (symbol === 'USDT' || symbol === 'USDC') return amount > 10000;
-            if (symbol === 'XRP' || symbol === 'SOL') return amount > 10000;
-            return false;
-        });
-
+        // Сортируем по сумме (от большего к меньшему)
         data.sort((a, b) => b.amount - a.amount);
+
         return data;
     } catch (error) {
         console.error('Error fetching transaction data', error);
@@ -106,11 +106,12 @@ const App = () => {
     const [filter, setFilter] = useState("");
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
+    const [selectedToken, setSelectedToken] = useState("ETH"); // Начальный выбор токена
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const realData = await getTransactionData();
+                const realData = await getTransactionData(selectedToken);
 
                 if (realData.length > 0) {
                     setData(realData);
@@ -127,7 +128,7 @@ const App = () => {
         fetchData();
         const id = setInterval(fetchData, 3600000);
         return () => clearInterval(id);
-    }, []);
+    }, [selectedToken]); // Запрос будет обновляться при изменении выбранного токена
 
     const shown = filter
         ? data.filter(tx =>
@@ -153,11 +154,25 @@ const App = () => {
                     </p>
                     <div className="w-full max-w-md mt-6">
                         <Input
-                            placeholder="Filter by token, from or to"
+                            placeholder="Filter by sender or receiver address"
                             value={filter}
                             onChange={(e) => setFilter(e.target.value)}
                             className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
                         />
+                    </div>
+                    <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                        {TOKENS.map((token) => (
+                            <button
+                                key={token}
+                                onClick={() => setSelectedToken(token)}
+                                className={`w-full px-4 py-2 rounded-md text-sm ${
+                                    selectedToken === token
+                                        ? 'bg-blue-600 text-white'
+                                        : 'bg-gray-300 text-gray-800'
+                                } hover:bg-blue-500 transition-all`}>
+                                {token}
+                            </button>
+                        ))}
                     </div>
                 </div>
                 <div className="absolute top-0 right-0 p-6">
