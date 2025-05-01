@@ -14,6 +14,7 @@ const BuyModal = ({ domain, isOpen, onClose }) => {
                     <a
                         href="https://t.me/Kaiserkrab"
                         target="_blank"
+                        rel="noreferrer"
                         className="bg-blue-600 text-white px-4 py-2 rounded-lg"
                     >
                         Telegram
@@ -21,6 +22,7 @@ const BuyModal = ({ domain, isOpen, onClose }) => {
                     <a
                         href="https://wa.me/40765263983"
                         target="_blank"
+                        rel="noreferrer"
                         className="bg-green-500 text-white px-4 py-2 rounded-lg"
                     >
                         WhatsApp
@@ -41,7 +43,7 @@ const BuyModal = ({ domain, isOpen, onClose }) => {
 
                 {/* Добавление ссылки на Stacklead.pro */}
                 <div className="mt-4 text-center text-white">
-                    <p>Visit <a href="https://stacklead.pro" className="text-blue-500 underline">Stacklead.pro</a> for more information.</p>
+                    <p>By <a href="https://stacklead.pro" className="text-blue-500 underline" target="_blank" rel="noreferrer" >Stacklead.pro</a></p>
                 </div>
             </div>
         </div>
