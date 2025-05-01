@@ -62,7 +62,7 @@ const DomainCard = () => {
                                 href="https://t.me/Kaiserkrab"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                                className="bg-blue-600 text-white text-center px-4 py-2 rounded-lg"
                             >
                                 Telegram
                             </a>
@@ -70,13 +70,13 @@ const DomainCard = () => {
                                 href="https://wa.me/40765263983"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="bg-green-500 text-white px-4 py-2 rounded-lg"
+                                className="bg-green-500 text-white text-center px-4 py-2 rounded-lg"
                             >
                                 WhatsApp
                             </a>
                             <a
                                 href="https://www.namecheap.com/domains/registration/results/?domain=whalewatch.live"
-                                className="bg-yellow-500 text-white px-4 py-2 rounded-lg"
+                                className="bg-yellow-500 text-white text-center px-4 py-2 rounded-lg"
                             >
                                 Buy on Namecheap
                             </a>
