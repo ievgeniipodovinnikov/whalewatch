@@ -1,5 +1,3 @@
-// BuyModal.js
-
 import React from "react";
 
 const BuyModal = ({ domain, isOpen, onClose }) => {
@@ -39,6 +37,11 @@ const BuyModal = ({ domain, isOpen, onClose }) => {
                     >
                         Close
                     </button>
+                </div>
+
+                {/* Добавление ссылки на Stacklead.pro */}
+                <div className="mt-4 text-center text-white">
+                    <p>Visit <a href="https://stacklead.pro" className="text-blue-500 underline">Stacklead.pro</a> for more information.</p>
                 </div>
             </div>
         </div>
