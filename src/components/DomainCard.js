@@ -47,7 +47,7 @@ const DomainCard = () => {
 
             {/* Добавление ссылки на Stacklead.pro */}
             <div className="mt-4 text-center text-white">
-                <p>By <a href="https://stacklead.pro" className="text-blue-500 underline" target="_blank">Stacklead.pro</a></p>
+                <p>By <a href="https://stacklead.pro" className="text-blue-500 underline" target="_blank" rel="noreferrer" >Stacklead.pro</a></p>
             </div>
 
             {isModalOpen && (
