@@ -9,12 +9,12 @@ const query = `
 query {
   ethereum: EVM(network: eth) {
     Transfers(
-      limit: {count: 15}
+      limit: {count: 1000}
       orderBy: {descending: Block_Time}
       where: {
         Transfer: {
           Currency: {
-            Symbol: {in: ["BTC", "ETH", "USDC", "USDT", "XRP", "SOL"]}
+            Symbol: {in: ["ETH"]}
           }
         }
       }
@@ -75,7 +75,7 @@ const getTransactionData = async () => {
             }
         );
 
-        const data = response.data.data.ethereum.Transfers.map((tx) => ({
+        let data = response.data.data.ethereum.Transfers.map((tx) => ({
             symbol: tx.Transfer.Currency.Symbol,
             amount: parseFloat(tx.Transfer.Amount),
             from: { owner: tx.Transfer.Sender },
@@ -84,9 +84,17 @@ const getTransactionData = async () => {
             time: new Date(tx.Block.Time).toLocaleString(),
         }));
 
-        // Сортируем по сумме (от большего к меньшему)
-        data.sort((a, b) => b.amount - a.amount);
+        // Оставляем только большие транзакции
+        data = data.filter(tx => {
+            const { symbol, amount } = tx;
+            if (symbol === 'ETH') return amount > 10;
+            if (symbol === 'BTC') return amount > 0.2;
+            if (symbol === 'USDT' || symbol === 'USDC') return amount > 10000;
+            if (symbol === 'XRP' || symbol === 'SOL') return amount > 10000;
+            return false;
+        });
 
+        data.sort((a, b) => b.amount - a.amount);
         return data;
     } catch (error) {
         console.error('Error fetching transaction data', error);
