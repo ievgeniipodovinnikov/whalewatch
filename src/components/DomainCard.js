@@ -42,7 +42,7 @@ const DomainCard = () => {
             <img
                 src="/shark.png"
                 alt="Shark Icon"
-                className="absolute bottom-12 right-8 transform -translate-x-1/2 w-20 h-20 rounded-lg"
+                className="absolute bottom-12 right-8 transform -translate-x-1/2 w-20 h-20 rounded-lg shark-icon"
             />
 
             {/* Добавление ссылки на Stacklead.pro */}
@@ -90,6 +90,48 @@ const DomainCard = () => {
                     </div>
                 </div>
             )}
+
+            <style jsx>{`
+                @media (max-width: 640px) {
+                    .fixed {
+                        left: 0;
+                        right: 0;
+                        max-width: none;
+                        width: 100%;
+                        margin: 0 !important;
+                        padding: 16px;
+                        border-radius: 0;
+                    }
+
+                    .text-2xl {
+                        font-size: 20px;
+                    }
+
+                    .text-sm {
+                        font-size: 12px;
+                    }
+
+                    .text-lg {
+                        font-size: 16px;
+                    }
+
+                    .bg-blue-500 {
+                        font-size: 14px;
+                    }
+
+                    .shark-icon {
+                        display: none;
+                    }
+
+                    .top-2 {
+                        top: 12px;
+                    }
+
+                    .right-2 {
+                        right: 12px;
+                    }
+                }
+            `}</style>
         </div>
     );
 };
