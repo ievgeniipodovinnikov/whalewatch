@@ -17,10 +17,10 @@ const DomainCard = () => {
     return (
         <div className="fixed top-8 right-8 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-6 bg-gray-800 bg-opacity-80 text-white rounded-xl shadow-lg">
             <h3 className="text-2xl font-semibold mb-2">
-                This website is for sale: <span className="text-blue-400 font-mono">{domain}</span>
+                This web app is for sale: <span className="text-blue-400 font-mono">{domain}</span>
             </h3>
             <p className="italic text-sm mb-4">
-                Includes working site, premium domain, and active Twitter.
+                Includes production-ready startup app and premium domain. <a href="https://x.com/WhaleWatchLive" target="_blank" rel="noopener noreferrer">@TrustChainX profile included.</a>
             </p>
 
             <p className="mb-4">{description}</p>
