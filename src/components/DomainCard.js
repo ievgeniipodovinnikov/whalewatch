@@ -20,7 +20,7 @@ const DomainCard = () => {
                 This web app is for sale: <span className="text-blue-400 font-mono">{domain}</span>
             </h3>
             <p className="italic text-sm mb-4">
-                Includes production-ready startup app and premium domain. <a href="https://x.com/WhaleWatchLive" target="_blank" rel="noopener noreferrer">@TrustChainX profile included.</a>
+                Includes production-ready startup app and premium domain. <a href="https://x.com/WhaleWatchLive" target="_blank" rel="noopener noreferrer">@WhaleWatchLive profile included.</a>
             </p>
 
             <p className="mb-4">{description}</p>
